@@ -14,8 +14,8 @@ class User extends Authenticatable
     const IS_ADMIB = 1;
     const IS_UNBAN = 0;
     const IS_BAN = 1;
-    const CATEGORY_ID_DOXOD = 1;
-    const CATEGORY_ID_RASHOD = 2;
+    const CATEGORY_ID_INCOME  = 1;
+    const CATEGORY_ID_EXPENSES = 2;
 
 
 
@@ -142,13 +142,13 @@ class User extends Authenticatable
     }
 
     public function balans($id_category, $balans) {
-        if ($id_category == self::CATEGORY_ID_DOXOD) {
+        if ($id_category == self::CATEGORY_ID_INCOME) {
             $this->balans = $this->balans+$balans;
             $this->save();
             return $this->balans;
         }
 
-        if ($id_category == self::CATEGORY_ID_RASHOD) {
+        if ($id_category == self::CATEGORY_ID_EXPENSES) {
             $this->balans = $this->balans-$balans;
             $this->save();
             return $this->balans;

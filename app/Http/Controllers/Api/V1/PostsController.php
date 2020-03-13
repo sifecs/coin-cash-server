@@ -27,7 +27,7 @@ class PostsController extends Controller
     {
         $this->validate($request,[
             'title'=> 'required',
-            'date'=> 'required|Date',
+            'date'=> 'required',
             'cumma'=> 'required',
             'category_id'=> 'required',
             'currency_id'=> 'required',
@@ -46,7 +46,7 @@ class PostsController extends Controller
     {
         $this->validate($request,[
             'title'=> 'required',
-            'date'=> 'required|Date',
+            'date'=> 'required',
             'cumma'=> 'required',
             'category_id'=> 'required',
             'currency_id'=> 'required',
