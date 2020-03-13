@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Category;
-use App\Currencys;
 use App\Post;
 use App\Tag;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
 
     public function index(Request $request)
     {
-        $posts = Post::all();
         $userID = $request->user()->id;
-        $posts = $posts->where('user_id', $userID);
+        $posts = DB::table('posts')->where('user_id', $userID)->get();
         return response()->json(['posts'=> $posts,'message'=>'OK'],'200');
     }
 //[
