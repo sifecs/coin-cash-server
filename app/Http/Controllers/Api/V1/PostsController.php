@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Post;
-use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +16,7 @@ class PostsController extends Controller
         $posts = DB::table('posts')->where('user_id', $userID)->get();
         return response()->json(['posts'=> $posts,'message'=>'OK'],'200');
     }
-//[
-//{ id, ...},
-//{ id, ...},
-//{ id, ...},
-//...
-//]
+
     public function store(Request $request)
     {
         $this->validate($request,[
