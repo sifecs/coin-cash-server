@@ -5,19 +5,19 @@
 
     <section class="content-header">
       <h1>
-        Добавивление поста
-        <small>Пожалуйста добавить пост</small>
+        Добавивление Финанс
+        <small>Пожалуйста добавить Финанс пользователя</small>
       </h1>
     </section>
 
     <section class="content">
     {{Form::open([
-      'route'=>'posts.store',
+      'route'=>'finance.store',
       'files'=>true
     ])}}
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Добавивление поста</h3>
+          <h3 class="box-title">Добавивление Финанс пользователя</h3>
           @include('admin.errors')
         </div>
         <div class="box-body">
@@ -75,7 +75,7 @@
       </div>
 
         <div class="box-footer">
-          <a href="{{route('posts.index')}}" class="btn btn-default">Назад</a>
+          <a href="{{route('finance.index')}}" class="btn btn-default">Назад</a>
           <button class="btn btn-success pull-right">Добавить</button>
         </div>
 

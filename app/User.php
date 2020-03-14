@@ -39,8 +39,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts () {
-        return $this->hasMany(Post::class);
+    public function Finance () {
+        return $this->hasMany(Finance::class);
     }
 
     public static function add ($fields) {
@@ -130,7 +130,7 @@ class User extends Authenticatable
 
         return $this->ban();
     }
-
+// TODO: тут будет когда то конвертер валют
     public function getBalans() {
         return $this->balans;
     }
@@ -141,7 +141,7 @@ class User extends Authenticatable
         return $this->balans;
     }
 
-    public function balans($id_category, $balans) {
+    public function update_balans_user($id_category, $balans) {
         if ($id_category == self::CATEGORY_ID_INCOME) {
             $this->balans = $this->balans+$balans;
             $this->save();
@@ -156,13 +156,11 @@ class User extends Authenticatable
 
     }
 
-
     public function balansPlus($balans) {
         $this->balans = $this->balans+$balans;
         $this->save();
         return $this->balans;
     }
-
     public function balansMinus($balans) {
         $this->balans = $this->balans-$balans;
         $this->save();

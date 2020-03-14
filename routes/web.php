@@ -12,9 +12,6 @@
 */
 
 
-
-
-
 Route::get('/', 'HomeController@index');
 
 Route::group(['middleware' =>'auth'], function (){
@@ -35,7 +32,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware' =>'admin'], f
     Route::resource('/categories', 'CategoriesController');
     Route::resource('/currencies', 'CurrenciesController');
     Route::resource('/users', 'UsersController');
-    Route::resource('/posts', 'PostsController');
+    Route::resource('/finance', 'FinanceController');
 });
-
 
