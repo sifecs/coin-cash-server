@@ -4,14 +4,14 @@
   <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Список постов
-        <small>Полный список постов</small>
+        Список Финансов
+        <small>Управление финансами пользователя</small>
       </h1>
     </section>
 
     <section class="content">
       {{Form::open([
-        'route'=>'posts.store',
+        'route'=>'finance.store',
         'files'=>true
       ])}}
       <div class="box">
@@ -23,7 +23,7 @@
 
             <div class="box-body">
               <div class="form-group">
-                <a href="{{route('posts.create')}}" class="btn btn-success">Добавить</a>
+                <a href="{{route('finance.create')}}" class="btn btn-success">Добавить</a>
               </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -39,17 +39,17 @@
                 </thead>
                 <tbody>
 
-                  @foreach($posts as $post)
+                  @foreach($finance as $financ)
                   <tr>
-                    <td>{{$post->id}}</td>
-                    <td>{{$post->title}}</td>
-                    <td>{{$post->getCategoryTitle()}}</td>
-                    <td>{{$post->getСurrencyTitles()}}</td>
-                    <td>{{$post->getPhoneAuthor()}}</td>
-                    <td>{{$post->cumma}}</td>
+                    <td>{{$financ->id}}</td>
+                    <td>{{$financ->title}}</td>
+                    <td>{{$financ->getCategoryTitle()}}</td>
+                    <td>{{$financ->getСurrencyTitles()}}</td>
+                    <td>{{$financ->getPhoneAuthor()}}</td>
+                    <td>{{$financ->cumma}}</td>
                     <td>
-                      <a href="{{route('posts.edit', $post->id)}}" class="fa fa-pencil"></a>
-                      {{Form::open(['route'=>['posts.destroy', $post->id], 'method'=>'delete'])}}
+                      <a href="{{route('finance.edit', $financ->id)}}" class="fa fa-pencil"></a>
+                      {{Form::open(['route'=>['finance.destroy', $financ->id], 'method'=>'delete'])}}
                       <button onclick="return confirm('А вы уверены??')" class="delete-task" type="submit"><i class="fa fa-remove"></i></button>
                       {{Form::close()}}
                     </td>

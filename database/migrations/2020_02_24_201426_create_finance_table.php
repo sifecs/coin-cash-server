@@ -13,18 +13,18 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('finance', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->integer('category_id')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('category_id');
+            $table->integer('user_id');
             $table->timestamps();
             $table->text('description')->nullable();
-            $table->date('date')->nullable();
+            $table->date('date');
             $table->text('color')->nullable();
-            $table->text('currency_id')->nullable();
-            $table->text('cumma')->nullable();
+            $table->text('currency_id');
+            $table->text('cumma');
         });
     }
 

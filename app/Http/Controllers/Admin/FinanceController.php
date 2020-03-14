@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Currencys;
-use App\Post;
-use App\User;
+use App\Finance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Category;
+use App\Currencys;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class PostsController extends Controller
+class FinanceController extends Controller
 {
-
     public function index()
     {
-        $posts = Post::all();
+        $financs = Finance::all();
         $user = Auth::user();
-        return view('admin.posts.index',['posts'=> $posts,'user'=>$user]);
+        return view('admin.finance.index',['finance'=> $financs,'user'=>$user]);
     }
 
     public function create()
     {
         $currency = Currencys::pluck('title','id')->all();
         $categories = Category::pluck('title','id')->all();
-        return view('admin.posts.create',['currency' => $currency, 'categories' => $categories]);
+        return view('admin.finance.create',['currency' => $currency, 'categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -39,20 +38,20 @@ class PostsController extends Controller
 
         $user = User::find(Auth::id());
 
-        $user->balans($request->get('category_id'), $request->get('cumma'));
+        $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
 
-        $post = Post::add($request->all());
-        $post->setСurrency($request->get('currency_id'));
+        $financ = Finance::add($request->all());
+        $financ->setСurrency($request->get('currency_id'));
 
-        return redirect()->route('posts.index');
+        return redirect()->route('finance.index');
     }
 
     public function edit($id)
     {
-        $post = Post::find($id);
+        $financ = Finance::find($id);
         $currencys = Currencys::pluck('title','id')->all();
         $categories = Category::pluck('title','id')->all();
-        return view('admin.posts.edit',['currencys' => $currencys, 'categories' => $categories, 'post'=>$post]);
+        return view('admin.finance.edit',['currencys' => $currencys, 'categories' => $categories, 'financ'=>$financ]);
 
     }
 
@@ -65,21 +64,21 @@ class PostsController extends Controller
             'category_id'=> 'required|numeric',
             'currency_id'=> 'required|numeric',
         ]);
-        $post = Post::find($id);
+        $financ = Finance::find($id);
         $user = Auth::user();
 
-        $user->balans($request->get('category_id'), $request->get('cumma'));
+        $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
 
-        $post->edit($request->all());
-        $post->setCategory($request->get('category_id'));
-        $post->setСurrency($request->get('tags'));
-        return redirect()->route('posts.index');
+        $financ->edit($request->all());
+        $financ->setCategory($request->get('category_id'));
+        $financ->setСurrency($request->get('tags'));
+        return redirect()->route('finance.index');
     }
 
     public function destroy($id)
     {
-        Post::find($id)->remove();
-        return redirect()->route('posts.index');
+        Finance::find($id)->remove();
+        return redirect()->route('finance.index');
     }
 
 }

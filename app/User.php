@@ -14,8 +14,8 @@ class User extends Authenticatable
     const IS_ADMIB = 1;
     const IS_UNBAN = 0;
     const IS_BAN = 1;
-    const CATEGORY_ID_DOXOD = 1;
-    const CATEGORY_ID_RASHOD = 2;
+    const CATEGORY_ID_INCOME  = 1;
+    const CATEGORY_ID_EXPENSES = 2;
 
 
 
@@ -39,8 +39,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts () {
-        return $this->hasMany(Post::class);
+    public function Finance () {
+        return $this->hasMany(Finance::class);
     }
 
     public static function add ($fields) {
@@ -130,7 +130,7 @@ class User extends Authenticatable
 
         return $this->ban();
     }
-
+// TODO: тут будет когда то конвертер валют
     public function getBalans() {
         return $this->balans;
     }
@@ -141,14 +141,14 @@ class User extends Authenticatable
         return $this->balans;
     }
 
-    public function balans($id_category, $balans) {
-        if ($id_category == self::CATEGORY_ID_DOXOD) {
+    public function update_balans_user($id_category, $balans) {
+        if ($id_category == self::CATEGORY_ID_INCOME) {
             $this->balans = $this->balans+$balans;
             $this->save();
             return $this->balans;
         }
 
-        if ($id_category == self::CATEGORY_ID_RASHOD) {
+        if ($id_category == self::CATEGORY_ID_EXPENSES) {
             $this->balans = $this->balans-$balans;
             $this->save();
             return $this->balans;
@@ -156,13 +156,11 @@ class User extends Authenticatable
 
     }
 
-
     public function balansPlus($balans) {
         $this->balans = $this->balans+$balans;
         $this->save();
         return $this->balans;
     }
-
     public function balansMinus($balans) {
         $this->balans = $this->balans-$balans;
         $this->save();

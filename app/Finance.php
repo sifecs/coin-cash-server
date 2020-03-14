@@ -2,13 +2,12 @@
 
 namespace App;
 
-use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
-class Post extends Model
+class Finance extends Model
 {
     use Sluggable;
 
@@ -35,11 +34,11 @@ class Post extends Model
     }
 
     public static function add ($fields) {
-        $post = new static;
-        $post->fill($fields);
-        $post->user_id = Auth::user()->id;
-        $post->save();
-        return $post;
+        $financ = new static;
+        $financ->fill($fields);
+        $financ->user_id = Auth::user()->id;
+        $financ->save();
+        return $financ;
     }
 
     public  function edit ($fields) {
@@ -92,7 +91,8 @@ class Post extends Model
     }
 
     public function related() {
-       return self::all()->except($this->id);
+        return self::all()->except($this->id);
     }
 
+    protected $table = 'finance';
 }
