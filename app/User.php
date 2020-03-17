@@ -9,15 +9,12 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-
     const IS_USER = 0;
     const IS_ADMIB = 1;
     const IS_UNBAN = 0;
     const IS_BAN = 1;
-    const CATEGORY_ID_INCOME  = 1;
-    const CATEGORY_ID_EXPENSES = 2;
-
-
+    const INCOME = 1;
+    const EXPENSES = 2;
 
     use Notifiable;
 
@@ -142,13 +139,13 @@ class User extends Authenticatable
     }
 
     public function update_balans_user($id_category, $balans) {
-        if ($id_category == self::CATEGORY_ID_INCOME) {
+        if ($id_category == self::INCOME) {
             $this->balans = $this->balans+$balans;
             $this->save();
             return $this->balans;
         }
 
-        if ($id_category == self::CATEGORY_ID_EXPENSES) {
+        if ($id_category == self::EXPENSES) {
             $this->balans = $this->balans-$balans;
             $this->save();
             return $this->balans;

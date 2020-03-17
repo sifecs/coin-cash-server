@@ -13,8 +13,8 @@ class FinanceController extends Controller
 
     public function index(Request $request)
     {
-        $userID = $request->user()->id;
-        $finance = DB::table('finance')->where('user_id', $userID)->get();
+        $user = $request->user();
+        $finance = $user->Finance()->get();
         return response()->json(['Finance'=> $finance,'message'=>'OK'],'200');
     }
     public function store(Request $request)
@@ -89,7 +89,7 @@ class FinanceController extends Controller
 
         $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
         $financ = Finance::add($request->all());
-        $income = User::CATEGORY_ID_INCOME ;
+        $income = User::INCOME ;
         $financ->setCategory($income);
         $financ->setСurrency($request->get('currency_id'));
         return response()->json(['Finance'=>$financ,'message'=>'OK'],'200');
@@ -108,7 +108,7 @@ class FinanceController extends Controller
 
         $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
         $financ = Finance::add($request->all());
-        $expenses = User::CATEGORY_ID_EXPENSES ;
+        $expenses = User::EXPENSES ;
         $financ->setCategory($expenses);
         $financ->setСurrency($request->get('currency_id'));
         return response()->json(['Finance'=>$financ,'message'=>'OK'],'200');
