@@ -4,12 +4,10 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Auth;
 
 class Finance extends Model
 {
-    use Sluggable;
 
     protected $fillable = ['title','date','description', 'color', 'cumma', 'category_id', 'currency_id'];
 
@@ -23,14 +21,6 @@ class Finance extends Model
 
     public function user () {
         return $this->belongsTo(User::class,'user_id');
-    }
-
-    public function sluggable() {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
     }
 
     public static function add ($fields) {

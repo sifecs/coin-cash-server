@@ -16,7 +16,6 @@ class CreatePostsTable extends Migration
         Schema::create('finance', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('slug');
             $table->integer('category_id');
             $table->integer('user_id');
             $table->timestamps();
