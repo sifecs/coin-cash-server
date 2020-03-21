@@ -29,7 +29,6 @@
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Название</th>
                   <th>Категория</th>
                   <th>Валюта</th>
                   <th>Телефон пользователя</th>
@@ -42,11 +41,10 @@
                   @foreach($finance as $financ)
                   <tr>
                     <td>{{$financ->id}}</td>
-                    <td>{{$financ->title}}</td>
                     <td>{{$financ->getCategoryTitle()}}</td>
                     <td>{{$financ->getСurrencyTitles()}}</td>
                     <td>{{$financ->getPhoneAuthor()}}</td>
-                    <td>{{$financ->cumma}}</td>
+                    <td>{{$financ->amount}}</td>
                     <td>
                       <a href="{{route('finance.edit', $financ->id)}}" class="fa fa-pencil"></a>
                       {{Form::open(['route'=>['finance.destroy', $financ->id], 'method'=>'delete'])}}

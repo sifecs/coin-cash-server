@@ -34,6 +34,7 @@ class UsersController extends Controller
         ]);
         $user = User::add($request->all());
         $user->generatePassword($request->get('password'));
+        $user->generateToken();
         $user->uploadAvatar($request->file('avatar'));
 
         if ($request->get('status') != null) {

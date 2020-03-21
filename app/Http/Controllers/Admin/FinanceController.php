@@ -29,20 +29,23 @@ class FinanceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title'=> 'required',
-            'date'=> 'required',
-            'cumma'=> 'required|numeric',
+
+            'amount'=> 'required|numeric',
             'category_id'=> 'required|numeric',
             'currency_id'=> 'required|numeric',
         ]);
 
         $user = User::find(Auth::id());
 
-        $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
-
-        $financ = Finance::add($request->all());
+        $user->update_balans_user($request->get('category_id'), $request->get('amount'));
+        if (!$request->get('date')) {
+            $all = $request->all();
+            $all['date'] = date('Y-m-d');
+        } else {
+            $all = $request->all();
+        }
+        $financ = Finance::add($all);
         $financ->setСurrency($request->get('currency_id'));
-
         return redirect()->route('finance.index');
     }
 
@@ -58,20 +61,26 @@ class FinanceController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'title'=> 'required',
-            'date'=> 'required',
-            'cumma'=> 'required|numeric',
+            'date'=> 'nullable|date_format:Y-m-d',
+            'amount'=> 'required|numeric',
             'category_id'=> 'required|numeric',
             'currency_id'=> 'required|numeric',
         ]);
         $financ = Finance::find($id);
         $user = Auth::user();
 
-        $user->update_balans_user($request->get('category_id'), $request->get('cumma'));
+        $user->update_balans_user($request->get('category_id'), $request->get('amount'));
 
-        $financ->edit($request->all());
+        if (!$request->get('date')) {
+            $all = $request->all();
+            $all['date'] = date('Y-m-d');
+        } else {
+            $all = $request->all();
+        }
+
+        $financ->edit($all);
         $financ->setCategory($request->get('category_id'));
-        $financ->setСurrency($request->get('tags'));
+        $financ->setСurrency(1);
         return redirect()->route('finance.index');
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Category extends Model
 {
     protected $fillable = ['title','color'];
-
+    protected $hidden = ['updated_at', 'created_at'];
     public function posts() {
        return $this->hasMany(Post::class);
     }
