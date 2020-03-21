@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','phone'
+        'name', 'email','phone','balans'
     ];
 
     /**
@@ -33,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','api_token','updated_at','created_at', 'email', 'is_admin','avatar'
     ];
 
     public function Finance () {
@@ -43,9 +43,7 @@ class User extends Authenticatable
     public static function add ($fields) {
         $user = new static;
         $user->fill($fields);
-        $user-> api_token = Str::random(60);
         $user->save();
-
         return $user;
     }
 
@@ -59,6 +57,11 @@ class User extends Authenticatable
             $this->password = bcrypt($password);
             $this->save();
         }
+    }
+
+    public function generateToken () {
+            $this->api_token = Str::random(60);
+            $this->save();
     }
 
     public function remove() {

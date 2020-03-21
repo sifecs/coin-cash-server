@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,5 +12,9 @@ class ApiControler extends Controller
             'balans' => $request->user()->getBalans(),
             'message' => 'OK'
         ],200);
+    }
+
+    public  function listCaterories (Request $request) {
+        return response()->json(Category::all(),'200');
     }
 }

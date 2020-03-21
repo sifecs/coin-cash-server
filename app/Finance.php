@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class Finance extends Model
 {
 
-    protected $fillable = ['title','date','description', 'color', 'cumma', 'category_id', 'currency_id'];
+    protected $fillable = ['date','comment', 'amount', 'category_id', 'currency_id'];
+    protected $hidden = ['updated_at', 'created_at', 'currency_id', 'category_id'];
 
     public function category () {
         return $this->belongsTo(Category::class);
@@ -27,12 +28,14 @@ class Finance extends Model
         $financ = new static;
         $financ->fill($fields);
         $financ->user_id = Auth::user()->id;
+        $financ->setСurrency(1);
         $financ->save();
         return $financ;
     }
 
     public  function edit ($fields) {
         $this->fill($fields);
+        $this->setСurrency(1);
         $this->save();
     }
 

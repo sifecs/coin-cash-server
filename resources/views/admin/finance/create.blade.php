@@ -22,19 +22,10 @@
         </div>
         <div class="box-body">
           <div class="col-md-6">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Название</label>
-              <input type="text" name="title" value="{{old('title')}}" class="form-control" id="exampleInputEmail1" placeholder="">
-            </div>
 
             <div class="form-group">
               <label for="exampleInputEmail1">Сумма</label>
-              <input type="text" name="cumma" class="form-control" id="exampleInputEmail1" placeholder="Сумма">
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputEmail1">Цвет</label>
-              <input type="color" name="color" class="form-control" id="exampleInputEmail1" placeholder="">
+              <input type="text" name="amount" class="form-control" id="exampleInputEmail1" placeholder="Сумма">
             </div>
 
             <div class="form-group">
@@ -68,7 +59,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="exampleInputEmail1">Краткое описание</label>
-              <textarea name="description" id="" cols="30" rows="10" class="form-control">{{old('description')}}</textarea>
+              <textarea name="comment" id="" cols="30" rows="10" class="form-control">{{old('comment')}}</textarea>
             </div>
           </div>
 

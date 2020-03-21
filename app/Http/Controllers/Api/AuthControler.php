@@ -1,30 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AuthControler extends Controller
 {
-    public function registrForm () {
-        return view('pages.register');
-    }
-
-    public function loginForm() {
-        return view('pages.login');
-    }
-
     public function register(Request $request) {
         $this->validate($request, [
             'phone' =>'required|unique:users|phone:US,BE,KG,RU',
-            'password' =>'required'
+            'password' =>'required',
+            'name' => 'required'
         ]);
         $user = User::add($request->all());
         $user->generatePassword($request->get('password'));
         $user->generateToken();
-        return redirect('/login');
+        $user->setBalans(0);
+        return response()->json([
+            'api_token' => $user->api_token,
+            'user' => $user
+        ],200);
     }
 
     public  function login (Request $request) {
@@ -37,13 +35,17 @@ class AuthControler extends Controller
             'phone' => $request->get('phone'),
             'password' => $request->get('password')
         ]) ){
-            return redirect('/');
+            $userId = Auth::id();
+            $user = User::all();
+            $user = $user->find($userId);
+            $user->generateToken();
+            return response()->json([
+                'api_token' => $user->api_token,
+                'user' => $user
+            ],200);
         }
-        return redirect()->back()->with('status', 'Не правильный логин или пороль');
-    }
-
-    public function loguot() {
-        Auth::logout();
-        return redirect('/login');
+        return response()->json([
+            'message' => 'Неверный логин или пароль',
+        ],403);
     }
 }
