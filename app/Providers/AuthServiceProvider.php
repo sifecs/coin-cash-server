@@ -28,15 +28,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::viaRequest('custom-token', function ($request) {
-            if (User::where('api_token', $request->token)->first()) {
-                return User::where('api_token', $request->token)->first();
+            if ($request->header('authorization') == null) {
+                dd('токен не указан');
+            }
+            $token = explode(' ', $request->header('authorization'));
+            if (User::where('api_token', $token[1])->first()) {
+                return User::where('api_token', $token[1])->first();
             } else {
                 dd('Неверный токен');
-//                return response()->json([
-//                    'message' => 'неверный токееен'
-//                ],404);
             }
         });
-
     }
 }
