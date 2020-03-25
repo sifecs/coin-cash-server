@@ -29,23 +29,16 @@ class FinanceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-
             'amount'=> 'required|numeric',
             'category_id'=> 'required|numeric',
             'currency_id'=> 'required|numeric',
         ]);
 
         $user = User::find(Auth::id());
-
         $user->update_balans_user($request->get('category_id'), $request->get('amount'));
-        if (!$request->get('date')) {
-            $all = $request->all();
-            $all['date'] = date('Y-m-d');
-        } else {
-            $all = $request->all();
-        }
-        $financ = Finance::add($all);
-        $financ->setСurrency($request->get('currency_id'));
+
+        $all = $request->all();
+        $all['date'] =   $request->get('date', date('Y-m-d'));
         return redirect()->route('finance.index');
     }
 
@@ -66,28 +59,22 @@ class FinanceController extends Controller
             'category_id'=> 'required|numeric',
             'currency_id'=> 'required|numeric',
         ]);
+
         $financ = Finance::find($id);
         $user = Auth::user();
 
         $user->update_balans_user($request->get('category_id'), $request->get('amount'));
 
-        if (!$request->get('date')) {
-            $all = $request->all();
-            $all['date'] = date('Y-m-d');
-        } else {
-            $all = $request->all();
-        }
+        $all = $request->all();
+        $all['date'] =   $request->get('date', date('Y-m-d'));
 
         $financ->edit($all);
-        $financ->setCategory($request->get('category_id'));
-        $financ->setСurrency(1);
         return redirect()->route('finance.index');
     }
 
     public function destroy($id)
     {
-        Finance::find($id)->remove();
+        Finance::find($id)->delete();
         return redirect()->route('finance.index');
     }
-
 }

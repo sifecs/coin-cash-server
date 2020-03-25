@@ -22,8 +22,6 @@ class AuthControler extends Controller
             'password' =>'required'
         ]);
         $user = User::add($request->all());
-        $user->generatePassword($request->get('password'));
-        $user->generateToken();
         return redirect('/login');
     }
 

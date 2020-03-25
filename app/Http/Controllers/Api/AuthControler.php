@@ -16,8 +16,6 @@ class AuthControler extends Controller
             'name' => 'required'
         ]);
         $user = User::add($request->all());
-        $user->generatePassword($request->get('password'));
-        $user->generateToken();
         $user->setBalans(0);
         return response()->json([
             'api_token' => $user->api_token,
@@ -30,14 +28,12 @@ class AuthControler extends Controller
             'phone' =>'required|phone:US,BE,KG,RU',
             'password' =>'required'
         ]);
-
         if( Auth::attempt([
             'phone' => $request->get('phone'),
             'password' => $request->get('password')
         ]) ){
             $userId = Auth::id();
-            $user = User::all();
-            $user = $user->find($userId);
+            $user = User::find($userId);
             $user->generateToken();
             return response()->json([
                 'api_token' => $user->api_token,
