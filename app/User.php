@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','phone','balans'
+        'name', 'email','phone','balans','password','api_token'
     ];
 
     /**
@@ -42,12 +42,17 @@ class User extends Authenticatable
 
     public static function add ($fields) {
         $user = new static;
+        $fields['password'] = bcrypt($fields['password']);
+        $user->api_token = Str::random(60);
         $user->fill($fields);
         $user->save();
         return $user;
     }
 
     public  function edit ($fields) {
+        if ($fields['password'] != null) {
+            $fields['password'] = bcrypt($fields['password']);
+        }
         $this->fill($fields);
         $this->save();
     }

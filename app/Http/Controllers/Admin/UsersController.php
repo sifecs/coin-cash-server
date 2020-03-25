@@ -33,7 +33,6 @@ class UsersController extends Controller
             'is_admin' => 'nullable|boolean',
         ]);
         $user = User::add($request->all());
-        $user->generatePassword($request->get('password'));
         $user->generateToken();
         $user->uploadAvatar($request->file('avatar'));
 
@@ -68,7 +67,6 @@ class UsersController extends Controller
         ]);
 
         $user->edit($request->all());
-        $user->generatePassword($request->get('password'));
         $user->uploadAvatar($request->file('avatar'));
 
         if ($request->get('status') != null) {
